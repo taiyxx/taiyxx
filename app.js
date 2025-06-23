@@ -9,7 +9,6 @@ import { VRButton } from './libs/VRButton.js';
 import { CanvasUI } from './libs/CanvasUI.js';
 import { GazeController } from './libs/GazeController.js'
 import { XRControllerModelFactory } from './libs/three/jsm/XRControllerModelFactory.js';
-import { AudioLoader } from './libs/three/jsm/AudioLoader.js';
 
 class App{
 	constructor(){
@@ -42,11 +41,7 @@ class App{
 	
         window.addEventListener( 'resize', this.resize.bind(this) );
         
-        this.listener = new THREE.AudioListener();
-this.camera.add(this.listener);
-this.bgm = new THREE.Audio(this.listener);
-
-this.clock = new THREE.Clock();
+        this.clock = new THREE.Clock();
         this.up = new THREE.Vector3(0,1,0);
         this.origin = new THREE.Vector3();
         this.workingVec3 = new THREE.Vector3();
@@ -182,16 +177,6 @@ this.clock = new THREE.Clock();
         
         function onConnected( event ){
             clearTimeout( timeoutId );
-
-            // 🎵 加载并播放背景音乐
-            const audioLoader = new AudioLoader();
-            audioLoader.load('./assets/summer-upbeat-future-travel-pop-362161.mp3', (buffer) => {
-                self.bgm.setBuffer(buffer);
-                self.bgm.setLoop(true);
-                self.bgm.setVolume(0.5);
-                self.bgm.name = "BGM";
-                self.bgm.play();
-            });
         }
         
         function connectionTimeout(){

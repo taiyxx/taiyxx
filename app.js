@@ -360,4 +360,14 @@ class App{
 	}
 }
 
+if (this.immersive != this.renderer.xr.isPresenting) {
+    this.resize();
+    this.immersive = this.renderer.xr.isPresenting;
+
+    if (this.immersive) {
+        const audio = document.getElementById('bgm');
+        if (audio && audio.paused) audio.play();
+    }
+}
+
 export { App };

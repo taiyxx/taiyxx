@@ -20,14 +20,17 @@
     </style>
 </head>
 <body>
+    <audio id="bgm" loop>
+        <source src="./assets/summer.mp3" type="audio/mpeg">
+    </audio>
     <script src="./libs/fas.js"></script>
-	<script type="module">
+    <script type="module">
         import { App } from './app.js';
-        
-		document.addEventListener("DOMContentLoaded", function(){
-			const app = new App();
-			window.app = app;
-		});
-	</script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const app = new App();
+            window.app = app;
+        });
+    </script>
 </body>
 </html>

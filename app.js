@@ -211,22 +211,27 @@ class App {
         });
 
         const config = {
-            panelSize: { height: 0.5 },
-            height: 256,
-            name: { fontSize: 50, height: 70 },
-            info: { position: { top: 70, backgroundColor: "#ccc", fontColor: "#000" } }
-        }
+            panelSize: { height: 1 },
+            height: 512,
+            name: { fontSize: 80, height: 100 },
+            info: { position: { top: 100, backgroundColor: "#fff", fontColor: "#000" } }
+        };
+
         const content = {
             name: "Hello",
-            info: "Welcome to taiyxx vr tour"
-        }
+            info: "Welcome to taiyxx VR tour"
+        };
 
         this.ui = new CanvasUI(content, config);
+
         const reception = this.scene.getObjectByName("LobbyShop");
         if (reception) {
-            this.ui.position.copy(reception.position).add(new THREE.Vector3(0, 2.2, 0)); // 高度可微调
-            this.ui.lookAt(this.camera.position); 
+            const worldPos = reception.getWorldPosition(new THREE.Vector3());
+            const dir = this.camera.getWorldDirection(new THREE.Vector3()).normalize();
+            this.ui.position.copy(worldPos).add(new THREE.Vector3(0, 2.2, 0)).add(dir.multiplyScalar(0.3));
+            this.ui.lookAt(this.camera.getWorldPosition(new THREE.Vector3()));
         }
+
         this.scene.add(this.ui.mesh);
 
         this.renderer.setAnimationLoop(this.render.bind(this));

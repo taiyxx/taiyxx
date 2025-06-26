@@ -28,10 +28,11 @@ class App {
         this.scene = new THREE.Scene();
         this.scene.add(this.dolly);
 
-        const ambient = new THREE.HemisphereLight(0xFFFFFF, 0xAAAAAA, 0.8);
+        const ambient = new THREE.AmbientLight(0xffccaa, 0.4); // 环境光更柔和偏橘
         this.scene.add(ambient);
-        const dirLight = new THREE.DirectionalLight(0xffffff, 1);
-        dirLight.position.set(10, 20, 10);
+
+        const dirLight = new THREE.DirectionalLight(0xffaa66, 1.5); // 主光源偏橙黄
+        dirLight.position.set(-10, 15, -5); // 类似夕阳斜照
         dirLight.castShadow = true;
 
         dirLight.shadow.mapSize.width = 1024;
@@ -51,6 +52,10 @@ class App {
         this.renderer.outputEncoding = THREE.sRGBEncoding;
         this.renderer.shadowMap.enabled = true;
         this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+        // 日落风格色调映射
+        this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        this.renderer.toneMappingExposure = 1.3;
         container.appendChild(this.renderer.domElement);
         this.setEnvironment();
 

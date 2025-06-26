@@ -27,6 +27,22 @@ class App {
 
         this.scene = new THREE.Scene();
         this.scene.add(this.dolly);
+        const spotLight = new THREE.SpotLight(0xffaa66, 2); // 暖橘色 + 强度 2
+        spotLight.position.set(0, 10, 0); // 从上方正中间照下
+        spotLight.angle = Math.PI / 6;    // 聚光角度
+        spotLight.penumbra = 0.3;         // 柔化边缘
+        spotLight.decay = 2;
+        spotLight.distance = 40;
+
+        spotLight.castShadow = true;
+        spotLight.shadow.mapSize.width = 1024;
+        spotLight.shadow.mapSize.height = 1024;
+        spotLight.shadow.camera.near = 1;
+        spotLight.shadow.camera.far = 50;
+
+        spotLight.target.position.set(0, 0, 0); // 聚焦大厅中央（你也可以用 getObjectByName 定位）
+        this.scene.add(spotLight);
+        this.scene.add(spotLight.target);
 
         const ambient = new THREE.AmbientLight(0xffccaa, 0.4); // 环境光更柔和偏橘
         this.scene.add(ambient);

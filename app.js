@@ -30,11 +30,27 @@ class App {
 
         const ambient = new THREE.HemisphereLight(0xFFFFFF, 0xAAAAAA, 0.8);
         this.scene.add(ambient);
+        const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+        dirLight.position.set(10, 20, 10);
+        dirLight.castShadow = true;
+
+        dirLight.shadow.mapSize.width = 1024;
+        dirLight.shadow.mapSize.height = 1024;
+        dirLight.shadow.camera.near = 0.5;
+        dirLight.shadow.camera.far = 50;
+        dirLight.shadow.camera.left = -20;
+        dirLight.shadow.camera.right = 20;
+        dirLight.shadow.camera.top = 20;
+        dirLight.shadow.camera.bottom = -20;
+
+        this.scene.add(dirLight);
 
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.outputEncoding = THREE.sRGBEncoding;
+        this.renderer.shadowMap.enabled = true;
+        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         container.appendChild(this.renderer.domElement);
         this.setEnvironment();
 
@@ -129,6 +145,9 @@ class App {
 
                 college.traverse(function (child) {
                     if (child.isMesh) {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+
                         if (child.name.indexOf("PROXY") != -1) {
                             child.material.visible = false;
                             self.proxy = child;

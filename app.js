@@ -219,19 +219,21 @@ class App {
 
         const content = {
             name: "Hello",
-            info: "Welcome to taiyxx VR tour"
+            info: "Welcome to Taiyxx VR Tour"
         };
 
         this.ui = new CanvasUI(content, config);
 
         const reception = this.scene.getObjectByName("LobbyShop");
         if (reception) {
-            const worldPos = reception.getWorldPosition(new THREE.Vector3());
-            const dir = this.camera.getWorldDirection(new THREE.Vector3()).normalize();
-            this.ui.position.copy(worldPos).add(new THREE.Vector3(0, 2.2, 0)).add(dir.multiplyScalar(0.3));
-            this.ui.lookAt(this.camera.getWorldPosition(new THREE.Vector3()));
-        }
+            const wallPos = reception.getWorldPosition(new THREE.Vector3());
 
+            const offset = new THREE.Vector3(0, 2.2, -0.2);
+            this.ui.mesh.position.copy(wallPos).add(offset);
+
+            this.ui.mesh.rotation.set(0, Math.PI, 0); // 或你自己微调角度
+            this.ui.mesh.scale.set(2.5, 2.5, 2.5);
+        }
         this.scene.add(this.ui.mesh);
 
         this.renderer.setAnimationLoop(this.render.bind(this));

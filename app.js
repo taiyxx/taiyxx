@@ -217,11 +217,16 @@ class App {
             info: { position: { top: 70, backgroundColor: "#ccc", fontColor: "#000" } }
         }
         const content = {
-            name: "name",
-            info: "info"
+            name: "Hello",
+            info: "Welcome to taiyxx vr tour"
         }
 
         this.ui = new CanvasUI(content, config);
+        const reception = this.scene.getObjectByName("LobbyShop");
+        if (reception) {
+            this.ui.position.copy(reception.position).add(new THREE.Vector3(0, 2.2, 0)); // 高度可微调
+            this.ui.lookAt(this.camera.position); 
+        }
         this.scene.add(this.ui.mesh);
 
         this.renderer.setAnimationLoop(this.render.bind(this));

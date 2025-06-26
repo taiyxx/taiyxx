@@ -65,7 +65,25 @@ class App {
                 self.boardShown = '';
                 self.boardData = obj;
             });
+        const bgm = document.getElementById('bgm');
+
+        document.body.addEventListener('click', () => {
+            if (bgm && bgm.paused) {
+                bgm.play().catch((e) => {
+                    console.warn('Auto-play failed:', e);
+                });
+            }
+        });
+
+        this.renderer.xr.addEventListener('sessionstart', () => {
+            if (bgm) bgm.play();
+        });
+
+        this.renderer.xr.addEventListener('sessionend', () => {
+            if (bgm) bgm.pause();
+        });
     }
+
 
     setEnvironment() {
         const loader = new RGBELoader().setDataType(THREE.UnsignedByteType);

@@ -1,4 +1,3 @@
-
 import * as THREE from './libs/three/three.module.js';
 import { GLTFLoader } from './libs/three/jsm/GLTFLoader.js';
 import { DRACOLoader } from './libs/three/jsm/DRACOLoader.js';
@@ -211,29 +210,17 @@ class App {
         });
 
         const config = {
-            panelSize: { height: 1 },
-            height: 512,
-            name: { fontSize: 80, height: 100 },
-            info: { position: { top: 100, backgroundColor: "#fff", fontColor: "#000" } }
-        };
-
+            panelSize: { height: 0.5 },
+            height: 256,
+            name: { fontSize: 50, height: 70 },
+            info: { position: { top: 70, backgroundColor: "#ccc", fontColor: "#000" } }
+        }
         const content = {
-            name: "Hello",
-            info: "Welcome to Taiyxx VR Tour"
-        };
+            name: "name",
+            info: "info"
+        }
 
         this.ui = new CanvasUI(content, config);
-
-        const reception = this.scene.getObjectByName("LobbyShop");
-        if (reception) {
-            const wallPos = reception.getWorldPosition(new THREE.Vector3());
-
-            const offset = new THREE.Vector3(0, 2.2, -0.2);
-            this.ui.mesh.position.copy(wallPos).add(offset);
-
-            this.ui.mesh.rotation.set(0, Math.PI, 0); // 或你自己微调角度
-            this.ui.mesh.scale.set(2.5, 2.5, 2.5);
-        }
         this.scene.add(this.ui.mesh);
 
         this.renderer.setAnimationLoop(this.render.bind(this));

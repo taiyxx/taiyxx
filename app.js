@@ -27,10 +27,10 @@ class App {
 
         this.scene = new THREE.Scene();
         this.scene.add(this.dolly);
-        const spotLight = new THREE.SpotLight(0xffaa66, 2); 
-        spotLight.position.set(0, 10, 0); 
-        spotLight.angle = Math.PI / 6;    
-        spotLight.penumbra = 0.3;         
+        const spotLight = new THREE.SpotLight(0xffaa66, 2);
+        spotLight.position.set(0, 10, 0);
+        spotLight.angle = Math.PI / 6;
+        spotLight.penumbra = 0.3;
         spotLight.decay = 2;
         spotLight.distance = 40;
 
@@ -40,15 +40,15 @@ class App {
         spotLight.shadow.camera.near = 1;
         spotLight.shadow.camera.far = 50;
 
-        spotLight.target.position.set(0, 0, 0); 
+        spotLight.target.position.set(0, 0, 0);
         this.scene.add(spotLight);
         this.scene.add(spotLight.target);
 
-        const ambient = new THREE.AmbientLight(0xffccaa, 0.4); 
+        const ambient = new THREE.AmbientLight(0xffccaa, 0.4);
         this.scene.add(ambient);
 
-        const dirLight = new THREE.DirectionalLight(0xffaa66, 1.5); 
-        dirLight.position.set(-10, 15, -5); 
+        const dirLight = new THREE.DirectionalLight(0xffaa66, 1.5);
+        dirLight.position.set(-10, 15, -5);
         dirLight.castShadow = true;
 
         dirLight.shadow.mapSize.width = 1024;
@@ -165,7 +165,6 @@ class App {
 
                 college.traverse(function (child) {
 
-
                     if (child.isMesh) {
                         child.castShadow = true;
                         child.receiveShadow = true;
@@ -185,20 +184,13 @@ class App {
                     }
                 });
 
-                // 添加 LobbyShop 标记点
                 const door1 = college.getObjectByName("LobbyShop_Door_1");
                 const door2 = college.getObjectByName("LobbyShop_Door_2");
-
-                if (door1 && door2) {
-                    const pos = door1.position.clone().sub(door2.position).multiplyScalar(0.5).add(door2.position);
-                    const obj = new THREE.Object3D();
-                    obj.name = "LobbyShop";
-                    obj.position.copy(pos);
-                    college.add(obj);  // 把 obj 加入到模型中
-                } else {
-                    console.warn("❗找不到 LobbyShop_Door_1 或 LobbyShop_Door_2");
-                }
-
+                const pos = door1.position.clone().sub(door2.position).multiplyScalar(0.5).add(door2.position);
+                const obj = new THREE.Object3D();
+                obj.name = "LobbyShop";
+                obj.position.copy(pos);
+                college.add(obj);
 
                 self.loadingBar.visible = false;
 

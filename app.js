@@ -188,8 +188,8 @@ class App {
                 let door2 = null;
 
                 college.traverse((child) => {
-                    if (child.name === "LobbyShop_Door__1_") door1 = child;
-                    if (child.name === "LobbyShop_Door__2_") door2 = child;
+                    if (child.name.includes("LobbyShop_Door_1")) door1 = child;
+                    if (child.name.includes("LobbyShop_Door_2")) door2 = child;
                 });
 
                 if (door1?.position && door2?.position) {

@@ -113,10 +113,6 @@ class App {
 
         this.renderer.xr.addEventListener('sessionstart', () => {
             if (bgm) bgm.play();
-
-            // 显示欢迎 UI
-            this.welcomeUI.mesh.visible = true;
-            this.welcomeStartTime = this.clock.getElapsedTime();  // 记录显示时间
         });
 
         this.renderer.xr.addEventListener('sessionend', () => {
@@ -188,8 +184,8 @@ class App {
                     }
                 });
 
-                const door1 = college.getObjectByName("LobbyShop_Door__1_");
-                const door2 = college.getObjectByName("LobbyShop_Door__2_");
+                const door1 = college.getObjectByName("LobbyShop_Door_1");
+                const door2 = college.getObjectByName("LobbyShop_Door_2");
                 const pos = door1.position.clone().sub(door2.position).multiplyScalar(0.5).add(door2.position);
                 const obj = new THREE.Object3D();
                 obj.name = "LobbyShop";
@@ -265,19 +261,6 @@ class App {
         }
 
         this.ui = new CanvasUI(content, config);
-        this.welcomeUI = new CanvasUI({
-            welcome: "Hello, welcome to Taiyxx VR tour"
-        }, {
-            panelSize: { height: 0.4 },
-            height: 128,
-            welcome: { fontSize: 40, height: 80, backgroundColor: "#000", fontColor: "#fff" }
-        });
-        this.welcomeUI.mesh.position.set(0, 1.6, -1.5);  // 相机正前方 1.5 米
-        this.welcomeUI.mesh.visible = false;
-        this.welcomeUI.mesh.material.transparent = true;
-        this.welcomeUI.mesh.material.opacity = 1;  // 确保初始可见
-        this.welcomeUI.mesh.renderOrder = 999;
-        this.camera.add(this.welcomeUI.mesh); 
         this.scene.add(this.ui.mesh);
 
         this.renderer.setAnimationLoop(this.render.bind(this));
@@ -430,16 +413,6 @@ class App {
         }
 
         this.stats.update();
-        if (this.welcomeUI?.mesh?.visible) {
-            const t = this.clock.getElapsedTime() - this.welcomeStartTime;
-            if (t > 5) {
-                this.welcomeUI.mesh.visible = false;  // 超过 5 秒直接隐藏
-            } else if (t > 3) {
-                const opacity = 1 - (t - 3) / 2; // 3-5秒逐渐变透明
-                this.welcomeUI.mesh.material.opacity = opacity;
-                this.welcomeUI.mesh.material.transparent = true;
-            }
-        }
         this.renderer.render(this.scene, this.camera);
     }
 }

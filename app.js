@@ -27,10 +27,10 @@ class App {
 
         this.scene = new THREE.Scene();
         this.scene.add(this.dolly);
-        const spotLight = new THREE.SpotLight(0xffaa66, 2); // 暖橘色 + 强度 2
-        spotLight.position.set(0, 10, 0); // 从上方正中间照下
-        spotLight.angle = Math.PI / 6;    // 聚光角度
-        spotLight.penumbra = 0.3;         // 柔化边缘
+        const spotLight = new THREE.SpotLight(0xffaa66, 2); 
+        spotLight.position.set(0, 10, 0); 
+        spotLight.angle = Math.PI / 6;    
+        spotLight.penumbra = 0.3;         
         spotLight.decay = 2;
         spotLight.distance = 40;
 
@@ -40,15 +40,15 @@ class App {
         spotLight.shadow.camera.near = 1;
         spotLight.shadow.camera.far = 50;
 
-        spotLight.target.position.set(0, 0, 0); // 聚焦大厅中央（你也可以用 getObjectByName 定位）
+        spotLight.target.position.set(0, 0, 0); 
         this.scene.add(spotLight);
         this.scene.add(spotLight.target);
 
-        const ambient = new THREE.AmbientLight(0xffccaa, 0.4); // 环境光更柔和偏橘
+        const ambient = new THREE.AmbientLight(0xffccaa, 0.4); 
         this.scene.add(ambient);
 
-        const dirLight = new THREE.DirectionalLight(0xffaa66, 1.5); // 主光源偏橙黄
-        dirLight.position.set(-10, 15, -5); // 类似夕阳斜照
+        const dirLight = new THREE.DirectionalLight(0xffaa66, 1.5); 
+        dirLight.position.set(-10, 15, -5); 
         dirLight.castShadow = true;
 
         dirLight.shadow.mapSize.width = 1024;
@@ -69,7 +69,6 @@ class App {
         this.renderer.shadowMap.enabled = true;
         this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-        // 日落风格色调映射
         this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
         this.renderer.toneMappingExposure = 1.3;
         container.appendChild(this.renderer.domElement);

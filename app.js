@@ -184,22 +184,13 @@ class App {
                     }
                 });
 
-                // ✅ 插入在这里
-                const door1 = college.getObjectByName("LobbyShop_Door__1_");
-                const door2 = college.getObjectByName("LobbyShop_Door__2_");
-
-                if (door1 && door2) {
-                    const pos = door1.position.clone().sub(door2.position).multiplyScalar(0.5).add(door2.position);
-                    const obj = new THREE.Object3D();
-                    obj.name = "LobbyShop";
-                    obj.position.copy(pos);
-                    college.add(obj);
-                } else {
-                    console.warn("❗找不到 LobbyShop_Door__1_ 或 LobbyShop_Door__2_");
-                    college.traverse(child => {
-                        console.log("📌 物体名：", child.name);
-                    });
-                }
+                const door1 = college.getObjectByName("LobbyShop_Door_1");
+                const door2 = college.getObjectByName("LobbyShop_Door_2");
+                const pos = door1.position.clone().sub(door2.position).multiplyScalar(0.5).add(door2.position);
+                const obj = new THREE.Object3D();
+                obj.name = "LobbyShop";
+                obj.position.copy(pos);
+                college.add(obj);
 
                 self.loadingBar.visible = false;
 

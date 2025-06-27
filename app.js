@@ -27,10 +27,10 @@ class App {
 
         this.scene = new THREE.Scene();
         this.scene.add(this.dolly);
-        const spotLight = new THREE.SpotLight(0xffaa66, 2);
-        spotLight.position.set(0, 10, 0);
-        spotLight.angle = Math.PI / 6;
-        spotLight.penumbra = 0.3;
+        const spotLight = new THREE.SpotLight(0xffaa66, 2); // 暖橘色 + 强度 2
+        spotLight.position.set(0, 10, 0); // 从上方正中间照下
+        spotLight.angle = Math.PI / 6;    // 聚光角度
+        spotLight.penumbra = 0.3;         // 柔化边缘
         spotLight.decay = 2;
         spotLight.distance = 40;
 
@@ -40,15 +40,15 @@ class App {
         spotLight.shadow.camera.near = 1;
         spotLight.shadow.camera.far = 50;
 
-        spotLight.target.position.set(0, 0, 0);
+        spotLight.target.position.set(0, 0, 0); // 聚焦大厅中央（你也可以用 getObjectByName 定位）
         this.scene.add(spotLight);
         this.scene.add(spotLight.target);
 
-        const ambient = new THREE.AmbientLight(0xffccaa, 0.4);
+        const ambient = new THREE.AmbientLight(0xffccaa, 0.4); // 环境光更柔和偏橘
         this.scene.add(ambient);
 
-        const dirLight = new THREE.DirectionalLight(0xffaa66, 1.5);
-        dirLight.position.set(-10, 15, -5);
+        const dirLight = new THREE.DirectionalLight(0xffaa66, 1.5); // 主光源偏橙黄
+        dirLight.position.set(-10, 15, -5); // 类似夕阳斜照
         dirLight.castShadow = true;
 
         dirLight.shadow.mapSize.width = 1024;
@@ -69,6 +69,7 @@ class App {
         this.renderer.shadowMap.enabled = true;
         this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
+        // 日落风格色调映射
         this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
         this.renderer.toneMappingExposure = 1.3;
         container.appendChild(this.renderer.domElement);
@@ -183,24 +184,13 @@ class App {
                     }
                 });
 
-                // ✅ 确保放在 traverse 之后
                 const door1 = college.getObjectByName("LobbyShop_Door_1");
                 const door2 = college.getObjectByName("LobbyShop_Door_2");
-
-                if (door1 && door2) {
-                    const pos = door1.position.clone().sub(door2.position).multiplyScalar(0.5).add(door2.position);
-                    const obj = new THREE.Object3D();
-                    obj.name = "LobbyShop";
-                    obj.position.copy(pos);
-                    college.add(obj);
-                } else {
-                    console.warn("❗找不到 LobbyShop_Door_1 或 LobbyShop_Door_2");
-                    // ✅ 打印模型所有物体名以便调试
-                    college.traverse(child => {
-                        console.log("👀 物体名：", child.name);
-                    });
-                }
-
+                const pos = door1.position.clone().sub(door2.position).multiplyScalar(0.5).add(door2.position);
+                const obj = new THREE.Object3D();
+                obj.name = "LobbyShop";
+                obj.position.copy(pos);
+                college.add(obj);
 
                 self.loadingBar.visible = false;
 
@@ -428,4 +418,3 @@ class App {
 }
 
 export { App };
-

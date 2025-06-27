@@ -274,6 +274,9 @@ class App {
         });
         this.welcomeUI.mesh.position.set(0, 1.6, -1.5);  // 相机正前方 1.5 米
         this.welcomeUI.mesh.visible = false;
+        this.welcomeUI.mesh.material.transparent = true;
+        this.welcomeUI.mesh.material.opacity = 1;  // 确保初始可见
+        this.welcomeUI.mesh.renderOrder = 999;
         this.camera.add(this.welcomeUI.mesh); 
         this.scene.add(this.ui.mesh);
 

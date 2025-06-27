@@ -164,8 +164,6 @@ class App {
                 self.scene.add(college);
 
                 college.traverse(function (child) {
-
-
                     if (child.isMesh) {
                         child.castShadow = true;
                         child.receiveShadow = true;
@@ -185,7 +183,7 @@ class App {
                     }
                 });
 
-                // 添加 LobbyShop 标记点
+                // ✅ 确保放在 traverse 之后
                 const door1 = college.getObjectByName("LobbyShop_Door_1");
                 const door2 = college.getObjectByName("LobbyShop_Door_2");
 
@@ -194,9 +192,13 @@ class App {
                     const obj = new THREE.Object3D();
                     obj.name = "LobbyShop";
                     obj.position.copy(pos);
-                    college.add(obj);  // 把 obj 加入到模型中
+                    college.add(obj);
                 } else {
                     console.warn("❗找不到 LobbyShop_Door_1 或 LobbyShop_Door_2");
+                    // ✅ 打印模型所有物体名以便调试
+                    college.traverse(child => {
+                        console.log("👀 物体名：", child.name);
+                    });
                 }
 
 

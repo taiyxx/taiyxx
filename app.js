@@ -184,14 +184,26 @@ class App {
                     }
                 });
 
-                const door1 = college.getObjectByName("LobbyShop_Door_1");
-                const door2 = college.getObjectByName("LobbyShop_Door_2");
-                const pos = door1.position.clone().sub(door2.position).multiplyScalar(0.5).add(door2.position);
-                const obj = new THREE.Object3D();
-                obj.name = "LobbyShop";
-                obj.position.copy(pos);
-                college.add(obj);
+                let door1 = null;
+                let door2 = null;
 
+                college.traverse((child) => {
+                    if (child.name === "LobbyShop_Door__1_") door1 = child;
+                    if (child.name === "LobbyShop_Door__2_") door2 = child;
+                });
+
+                if (door1?.position && door2?.position) {
+                    const pos = door1.position.clone().sub(door2.position).multiplyScalar(0.5).add(door2.position);
+                    const obj = new THREE.Object3D();
+                    obj.name = "LobbyShop";
+                    obj.position.copy(pos);
+                    college.add(obj);
+                } else {
+                    console.warn("❗ 找不到 LobbyShop 的门，无法定位 LobbyShop");
+                    college.traverse(child => {
+                        console.log("🧭 场景物体名称：", child.name);
+                    });
+                }
                 self.loadingBar.visible = false;
 
                 self.setupXR();
